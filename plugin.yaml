@@ -1,0 +1,11 @@
+name: hermes-openwhispr
+version: "0.1.0"
+requires_hermes: ">=0.21.0"
+description: Local-first OpenWhispr voice history and notes for Hermes.
+author: [user]
+license: MIT
+capabilities:
+  tools: []
+  hooks: []
+  middleware: []
+  env_vars: []
