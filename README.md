@@ -68,6 +68,18 @@ all optional) auto-fill meeting titles and attendees. CLI and MCP split
 cleanly: local CLI free with no key, cloud CLI and MCP for Claude,
 ChatGPT, and Cursor on the paid plan.
 
+- **One trail across every surface.** Discord, every gateway, every
+  interface — CLI, TUI, dashboard, desktop. Because OpenWhispr sits at
+  voice input rather than inside any one app, it's a rolling record of
+  everything [user] says across all of those trajectories, not just one
+  chat log. Wherever the words came out, the breadcrumb is there.
+- **Scale it to your machine and your appetite, not five fixed sizes.**
+  Small computer with thin resources, or light needs? Go small. Want a
+  secretary in the chat interface minting notes alongside Hermes into a
+  shareable location? Go big. Sharing anything is opt-in; staying
+  private is a switch — turn everything off and it all still works
+  on-device. All up to you.
+
 ## Screenshots
 
 Personal details redacted with blur before publishing. This repo uses
