@@ -63,7 +63,9 @@ def test_no_core_overrides_or_self_updater():
 def test_readme_discloses_credential_read():
     readme = (ROOT / "README.md").read_text().lower()
     assert "cli-config.json" in readme
-    assert "read-only" in readme or "read only" in readme
+    assert "cli-bridge.json" in readme
+    assert "never opens credential files" in readme
+    assert "0600" in readme
 
 
 def test_license_present():

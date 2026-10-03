@@ -4,12 +4,37 @@ A small, local-first plugin between Hermes and OpenWhispr. Offered as a
 standalone plugin — not a claim on Hermes core, just an option for people
 who want it.
 
-Two doors, pick yours. **You dictate and want your words found:** install
-OpenWhispr, leave it running, and an agent can see your dictations —
-the rest of this file is the maintainer's case, and the pictures tell it
-faster than the prose. **You maintain Hermes and you're reviewing a
-proposal:** keep reading; every claim is followed by its evidence, and the
-trust material (privacy, disclosures, attribution) sits after the story.
+Two doors, pick yours.
+
+**You dictate and want your words found — try this** (8 lines):
+
+```bash
+brew install --cask openwhispr     # or openwhispr.com/download
+# open the app, press Globe (macOS), Ctrl+Win (Windows), or Ctrl+Super / F8 (Linux), say something
+npm install -g @openwhispr/cli
+openwhispr doctor                  # local bridge reachable
+openwhispr --local notes search "what you just said" --limit 5
+```
+
+New to OpenWhispr? Start at their quickstart (docs.openwhispr.com/quickstart),
+then come back. **You maintain Hermes and you're reviewing a proposal:**
+
+```bash
+hermes plugins install owner/repo  # or open hermes://plugin/install?repo=owner/repo&enable=1 on desktop
+hermes plugins enable hermes-openwhispr
+# then in a session: skill_view("hermes-openwhispr:openwhispr")
+# plugin skills load by qualified name only — they are not auto-indexed
+```
+
+One worked session, the whole product:
+
+> You: "find what I just dictated about the dentist"
+> Agent: `openwhispr --local notes search "dentist" --limit 20`
+> → note id 7, `created_at` this morning → `notes get 7 --transcript`
+> → your words, quoted back with id + timestamp.
+
+The pictures below tell the same story visually; the prose after them is
+the maintainer's case.
 
 Words used once, for everyone: STT means speech-to-text (voice into
 words). MCP means Model Context Protocol (how assistants read app data).
@@ -83,10 +108,11 @@ redacted with blur before publishing.
 ![](docs/screenshots/01-cli-access.png)
 
 The eye hits the paid connector card first; the CLI card underneath is
-the free half: `npm install -g @openwhispr/cli`, then
-`openwhispr --local transcriptions list --limit 5` with no login.
-(`notes list` starts empty — notes are the handoff surface you save to,
-transcriptions are the history.)
+the free half: `npm install -g @openwhispr/cli`, then exactly what the
+card shows — `openwhispr --local notes list` with no login. Dictations
+land as notes automatically, so this is the front door, not an empty
+room: for anything older than today, `openwhispr --local notes search
+"<phrase>" --limit 20`, then `notes get <id> --transcript`.
 
 ### Per-feature model picker: five tiers, your call each time
 
@@ -187,7 +213,8 @@ Granular, both directions, your call throughout:
   not open.
 - Remote network: api.openwhispr.com only when you opt into `--remote`.
 - The agent never opens credential files itself: the vendor CLI reads its
-  own bridge token and `~/.openwhispr/cli-config.json` (both `0600`).
+  own bridge token (`~/.openwhispr/cli-bridge.json`) and
+  `~/.openwhispr/cli-config.json` (both `0600`).
   Key setup includes the agent bootstrap flow (`/auth/email-code`, a
   6-digit code the user pastes, `POST /keys/create` for a scoped key) —
   always with consent, key stays in the CLI config, never in Hermes
@@ -248,8 +275,8 @@ talks to.
 ```bash
 npm install -g @openwhispr/cli
 openwhispr doctor                      # exit 0, local bridge reachable
-openwhispr --local transcriptions list --limit 5
-hermes plugins install <repo-url> && hermes plugins enable hermes-openwhispr
+openwhispr --local notes search "hello" --limit 5
+hermes plugins install owner/repo && hermes plugins enable hermes-openwhispr
 # then in a session: skill_view("hermes-openwhispr:openwhispr")
 # (plugin skills load by qualified name; they are not auto-indexed)
 python -m pytest tests/ -q             # here

@@ -31,7 +31,8 @@ Does not include assistant replies. Does not replace Hermes STT config. Defaults
 - Node.js 20 or later.
 - `@openwhispr/cli` installed globally via `terminal(command="npm install -g @openwhispr/cli")`.
 - OpenWhispr desktop app running locally for any `--local` work (install via `brew install --cask openwhispr`, openwhispr.com/download, or GitHub releases — no App Store, no login). No login or API key needed for local.
-- Remote/cloud is opt-in and paid (API key management is a paid feature). Key setup runs via `terminal(command="openwhispr auth login")`; the key is stored in the CLI's own config with `0600` permissions, never in Hermes `.env`. No-desktop-app path is the agent bootstrap flow: `POST https://api.openwhispr.com/api/v1/auth/email-code` with the user's email, the user pastes the 6-digit code (1 code per 60s, 5 per hour per email, 10 per hour per IP, 5 attempts per code, code expires in 10 minutes), then `POST https://api.openwhispr.com/api/v1/auth/email-code/verify` returns a 15-minute session token good only for `POST https://api.openwhispr.com/api/v1/keys/create`, which mints a scoped permanent key. Gotchas: `transcriptions:delete` has no checkbox in the desktop app, so a delete-capable key must be created through the API; workspace keys (`ow_wks_live_`) do not work with the CLI — use a personal key. Never log in, set `api-base`, or send audio remote without explicit consent.
+- Remote/cloud is opt-in and paid (API key management is a paid feature). Key setup runs via `terminal(command="openwhispr auth login")`; the key is stored in the CLI's own config with `0600` permissions, never in Hermes `.env`. Gotchas: `transcriptions:delete` has no checkbox in the desktop app, so a delete-capable key must be created through the API; workspace keys (`ow_wks_live_`) do not work with the CLI — use a personal key. Never log in, set `api-base`, or send audio remote without explicit consent.
+- Cloud opt-in note (only if the user asked this turn): without the desktop app, the agent bootstrap flow works — `POST https://api.openwhispr.com/api/v1/auth/email-code` with the user's email, the user pastes the 6-digit code (1 code per 60s, 5 per hour per email, 10 per hour per IP, 5 attempts per code, code expires in 10 minutes), then `POST https://api.openwhispr.com/api/v1/auth/email-code/verify` returns a 15-minute session token good only for `POST https://api.openwhispr.com/api/v1/keys/create`, which mints a scoped permanent key.
 
 ## How to Run
 
@@ -39,7 +40,7 @@ Frame every invocation through the `terminal` tool. Always prefer `--local` to f
 
 - Check health via `terminal(command="openwhispr doctor")` — exit 0 means at least one backend is up; confirm the local bridge shows reachable before relying on it. If local is unavailable (exit 2), tell the user to launch the desktop app and retry — never fall back to remote silently.
 - Backend select via `terminal(command="openwhispr config get")`; leave `backend: auto` so it prefers local when the app runs. The bridge listens on loopback; the live port is recorded in the CLI's bridge file — never assume a fixed port.
-- Read trail via `terminal(command="openwhispr --local transcriptions list --limit 10")`, then `terminal(command="openwhispr --local transcriptions get <id>")`.
+- Find what the user said via `terminal(command="openwhispr --local notes search \"<phrase>\" --limit 20")`, then `terminal(command="openwhispr --local notes get <id> --transcript")` — dictations are saved as notes automatically, and `notes search` is the search. Raw recent trail via `terminal(command="openwhispr --local transcriptions list --limit 10")`.
 - Read notes via `terminal(command="openwhispr --local notes list --limit 20")`, `terminal(command="openwhispr --local notes get <id> --format json|markdown")`, `terminal(command="openwhispr --local notes search <query> --limit 10")`.
 - Write handoff note via `terminal(command="openwhispr --local notes create --content <text> --title <t> --folder <id>")` (folder takes an id — resolve it first via `terminal(command="openwhispr --local folders list")`) or `--content-file <path>` for long bodies.
 - Dual backends: `--local` forces the desktop bridge (free, no cap, audio stays on-machine); `--remote` forces OpenWhispr Cloud (paid plan + key; over 4 MB files are split into 4-minute chunks client-side needing `ffmpeg` on PATH; cloud transcription is beta with no SLA). Bare `openwhispr` with `backend: auto` prefers local when reachable. Touch `--remote` only after the user opts into cloud.
@@ -73,7 +74,7 @@ Exit codes: 0 success (at least one backend reachable for `doctor`), 1 bad args,
 ## Procedure
 
 1. Verify local is up via `terminal(command="openwhispr doctor")`. Done when the output reports the local bridge reachable; if exit 2, tell the user to launch the desktop app and retry — do not fall back to remote silently.
-2. Find the breadcrumb: list recent transcriptions (limit 10-20), scan `text`/`timestamp` fields. Done when the matching utterance or a clear miss is established; quote id + timestamp when citing.
+2. Find the breadcrumb: `notes search` first (limit 20), scan `text`/`created_at` fields. Done when the matching utterance or a clear miss is established; quote id + timestamp when citing. Fall back to the raw `transcriptions list` trail only for the very recent or unsaved.
 3. Promote only on purpose: transcriptions are raw history; `notes create` only when the user wants a durable shared note. Done when the note id returns and `notes get` round-trips the same content.
 4. Share between agents via notes: title + folder + full JSON body, never paraphrase ids. Done when the next agent can `notes get <id>` without asking the user for context.
 5. Transcribe locally via `terminal(command="openwhispr --local transcribe <file>")` using the app's current model; add `--note --title --folder <name>` (folder by name here) to file it in one step. Done when transcript text prints and the optional note id exists.
@@ -81,10 +82,10 @@ Exit codes: 0 success (at least one backend reachable for `doctor`), 1 bad args,
 
 ## Pitfalls
 
-- Notes vs transcriptions: `notes list` is empty until something is explicitly saved; the history lives in `transcriptions list`. An empty notes result is not an error.
+- Notes vs transcriptions: dictations are saved as notes automatically — search notes first. An empty trail with Data Retention off is not a CLI bug: with retention off, text is pasted and nothing is stored. Local mode sees this desktop only, not the phone, unless paid cloud backup is on. Never call a `--limit 20` miss "not in history" without saying which door was checked.
 - Dictionary is a hint, not an override. Keep it to the ~50 words actually gotten wrong; 500 dilutes the model. Export before moving machines.
 - `--model <id>` must already be downloaded in the desktop app; a wrong name makes the CLI list what's available — use that list verbatim.
-- Over 4 MB, remote files split into 4-minute chunks client-side and need `ffmpeg` on PATH; prefer local for long or private audio.
+- Over 4 MB, remote files split into 4-minute chunks client-side and need `ffmpeg` on PATH; `--remote` transcribe is 600 minutes per calendar month and needs `--prompt` for names; prefer local for long or private audio.
 - No SRT/VTT from the CLI; use `--format json` and post-process segments for timestamps.
 - `audio delete` is local-only and dictation-only; meeting transcripts have no audio file; `--remote` errors by design.
 - Never write, update, or delete notes/transcriptions/dictionary without explicit consent; reads and searches are always safe.
