@@ -99,6 +99,17 @@ substitute your own when following along.
   save-notes-as-files with rebuild (save path redacted).
 - `docs/screenshots/05-calendar-api.png` — optional calendar
   integrations and Pro API keys (account email redacted).
+- `docs/screenshots/06-speech-to-text.png` — Dictation engine picker:
+  3 input types (Dictation, Note Recording, Audio Upload), 4 engine
+  tiers, 4 local vendors (Oruk, OpenAI, NVIDIA, Cohere) with Cohere
+  Transcribe 2B active on-device, plus live-transcription preview.
+- `docs/screenshots/07-dictation-cleanup-models.png` — Dictation
+  Cleanup picker: 5 providers with Local active, 6 vendor filters
+  (Qwen, Mistral, Meta Llama, OpenAI, Gemma, Liquid AI), per-model
+  download sizes (e.g. Gemma 4 31B at 19.6GB).
+
+Pin a different model per task or run everything on one — local,
+cloud, self-hosted, or enterprise, decided per feature, not per app.
 
 ## Layout
 
