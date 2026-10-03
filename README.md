@@ -173,6 +173,21 @@ Ara at her station, and the typed line saying it plain — local voice in,
 whether you're replying to an email or talking to your agent. No
 relearning which button to push.
 
+### Desktop welcome: 21 lines that open every door
+
+![](docs/screenshots/09-desktop.png)
+
+Hermes at rest: skill inventory, model and reasoning selectors, empty
+composer with a thought already forming about local voice. This is the
+calm before the breadcrumb trail starts.
+
+### Management console: everything, redacted where it counts
+
+![](docs/screenshots/10-console.png)
+
+Sessions, files, models, skills, plugins, gateways — the whole switchboard. Session history, working path, and session id blurred out:
+ advertise the size of the thing, not the contents of your life.
+
 ## The point in one paragraph
 
 No Python dependencies and no changes to Hermes itself — though be
@@ -259,7 +274,7 @@ hermes-openwhispr/
 ├── README.md
 ├── LICENSE
 ├── skills/openwhispr/SKILL.md
-├── docs/screenshots/01-08*.png
+├── docs/screenshots/01-10*.png
 └── tests/test_plugin.py
 ```
 
