@@ -226,6 +226,23 @@ hermes-openwhispr/
 └── tests/test_plugin.py
 ```
 
+## Install
+
+Command line all the way down — no App Store involved:
+
+```bash
+brew install --cask openwhispr     # desktop app (verified in the brew catalog)
+npm install -g @openwhispr/cli     # agent CLI (pnpm or bun work too)
+```
+
+Alternatives straight from the source: openwhispr.com/download for the
+signed builds (macOS, Windows, Linux, iOS), GitHub releases for the
+`.dmg` files (Apple Silicon and Intel), or `git clone
+https://github.com/OpenWhispr/openwhispr.git` plus `npm install` /
+`npm run dev` if you build from source. OpenWhispr itself is MIT-licensed
+open source. Leave the app running — the local bridge is what the agent
+talks to.
+
 ## Smoke test
 
 ```bash

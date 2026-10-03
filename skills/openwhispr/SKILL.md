@@ -30,7 +30,7 @@ Does not include assistant replies. Does not replace Hermes STT config. Defaults
 
 - Node.js 20 or later.
 - `@openwhispr/cli` installed globally via `terminal(command="npm install -g @openwhispr/cli")`.
-- OpenWhispr desktop app running locally for any `--local` work. No login or API key needed for local.
+- OpenWhispr desktop app running locally for any `--local` work (install via `brew install --cask openwhispr`, openwhispr.com/download, or GitHub releases — no App Store, no login). No login or API key needed for local.
 - Remote/cloud is opt-in and paid (API key management is a paid feature). Key setup runs via `terminal(command="openwhispr auth login")`; the key is stored in the CLI's own config with `0600` permissions, never in Hermes `.env`. No-desktop-app path is the agent bootstrap flow: `POST https://api.openwhispr.com/api/v1/auth/email-code` with the user's email, the user pastes the 6-digit code (1 code per 60s, 5 per hour per email, 10 per hour per IP, 5 attempts per code, code expires in 10 minutes), then `POST https://api.openwhispr.com/api/v1/auth/email-code/verify` returns a 15-minute session token good only for `POST https://api.openwhispr.com/api/v1/keys/create`, which mints a scoped permanent key. Gotchas: `transcriptions:delete` has no checkbox in the desktop app, so a delete-capable key must be created through the API; workspace keys (`ow_wks_live_`) do not work with the CLI — use a personal key. Never log in, set `api-base`, or send audio remote without explicit consent.
 
 ## How to Run
