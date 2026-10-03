@@ -86,30 +86,63 @@ Personal details redacted with blur before publishing. This repo uses
 `[user]` wherever a personal name, handle, email, or path would go —
 substitute your own when following along.
 
-- `docs/screenshots/01-cli-access.png` — CLI install, Local Free
-  (`openwhispr --local notes list`, no login) vs Cloud Pro, plus the
-  MCP upsell for Claude, ChatGPT, and Cursor.
-- `docs/screenshots/02-language-models.png` — per-feature model picker
-  (Dictation Cleanup, Voice Assistant, Translation, Note Formatting,
-  Chat) across OpenWhispr Cloud, Cloud Providers (own key), Local
-  on-device private, Self-Hosted, and Enterprise.
-- `docs/screenshots/03-auto-learn.png` — Auto-learn from corrections,
-  the self-improving dictionary.
-- `docs/screenshots/04-save-to-disk.png` — clipboard behavior plus
-  save-notes-as-files with rebuild (save path redacted).
-- `docs/screenshots/05-calendar-api.png` — optional calendar
-  integrations and Pro API keys (account email redacted).
-- `docs/screenshots/06-speech-to-text.png` — Dictation engine picker:
-  3 input types (Dictation, Note Recording, Audio Upload), 4 engine
-  tiers, 4 local vendors (Oruk, OpenAI, NVIDIA, Cohere) with Cohere
-  Transcribe 2B active on-device, plus live-transcription preview.
-- `docs/screenshots/07-dictation-cleanup-models.png` — Dictation
-  Cleanup picker: 5 providers with Local active, 6 vendor filters
-  (Qwen, Mistral, Meta Llama, OpenAI, Gemma, Liquid AI), per-model
-  download sizes (e.g. Gemma 4 31B at 19.6GB).
+### CLI install, Local Free vs Cloud Pro, MCP upsell
 
-Pin a different model per task or run everything on one — local,
-cloud, self-hosted, or enterprise, decided per feature, not per app.
+![](docs/screenshots/01-cli-access.png)
+
+`npm install -g @openwhispr/cli`, then `openwhispr --local notes list`
+with no login — or Cloud Pro and MCP for Claude, ChatGPT, and Cursor.
+
+### Per-feature model picker: five tiers, your call each time
+
+![](docs/screenshots/02-language-models.png)
+
+Dictation Cleanup, Voice Assistant, Translation, Note Formatting, Chat —
+each picks independently from OpenWhispr Cloud, Cloud Providers (own
+key), Local on-device private, Self-Hosted, or Enterprise.
+
+### Auto-learn from corrections: the self-improving dictionary
+
+![](docs/screenshots/03-auto-learn.png)
+
+Fix a word in the target app and it's in your dictionary. No maintenance.
+
+### Clipboard flow plus save-notes-as-files (save path redacted)
+
+![](docs/screenshots/04-save-to-disk.png)
+
+Auto-paste, keep-in-clipboard, and on-disk Markdown organized by folder
+with a rebuild action — a second breadcrumb trail agents can read directly.
+
+### Optional calendars and Pro API keys (account email redacted)
+
+![](docs/screenshots/05-calendar-api.png)
+
+Google, Microsoft, Apple — all optional. Meeting titles and attendees
+auto-fill into notes.
+
+### Dictation engine picker: 3 inputs, 4 tiers, 4 local vendors
+
+![](docs/screenshots/06-speech-to-text.png)
+
+Dictation, Note Recording, Audio Upload. Oruk, OpenAI, NVIDIA, Cohere —
+Cohere Transcribe 2B active on-device here — plus live-transcription preview.
+
+### Dictation Cleanup picker: 6 vendors, per-model downloads
+
+![](docs/screenshots/07-dictation-cleanup-models.png)
+
+Qwen, Mistral, Meta Llama, OpenAI, Gemma, Liquid AI, with honest sizes
+(Gemma 4 31B at 19.6GB). Pin a different model per task or run
+everything on one — local, cloud, self-hosted, or enterprise, decided
+per feature, not per app.
+
+## The point in one paragraph
+
+No weird integrations, no regressions, no new dependencies: your
+personal context shows up in every space you interact in, with every
+agent you talk to — and underneath it all, a first-class, go-to
+speech-to-text option that happens to remember everything you said.
 
 ## Layout
 
