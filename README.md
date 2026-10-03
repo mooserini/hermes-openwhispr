@@ -186,7 +186,22 @@ calm before the breadcrumb trail starts.
 ![](docs/screenshots/10-console.png)
 
 Sessions, files, models, skills, plugins, gateways — the whole switchboard. Session history, working path, and session id blurred out:
- advertise the size of the thing, not the contents of your life.
+advertise the size of the thing, not the contents of your life.
+
+### Same question, two brains: local Gemma vs cloud, wake word included
+
+![](docs/screenshots/11-voice-local-test.png)
+
+"Hey Luna, explain the importance of open source" — answered on-device
+by Gemma, Local provider, in the assistant-prompt Test tab.
+
+![](docs/screenshots/12-voice-cloud-test.png)
+
+"Hey LunaBoo, explain it in deep detail as a pitch for a repository" —
+answered through OpenRouter, and out comes a repo pitch: an invitation to
+take part, technology more people can understand, shape, and trust. Same
+question, different wake word, different provider, and you can demand the
+output in whatever shape you need — including the shape of this very repo.
 
 ## The point in one paragraph
 
@@ -274,7 +289,7 @@ hermes-openwhispr/
 ├── README.md
 ├── LICENSE
 ├── skills/openwhispr/SKILL.md
-├── docs/screenshots/01-10*.png
+├── docs/screenshots/01-12*.png
 └── tests/test_plugin.py
 ```
 
