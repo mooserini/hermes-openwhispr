@@ -163,6 +163,16 @@ list continues below the crop. Pin a different model per task or run
 everything on one — local, cloud, self-hosted, or enterprise, decided
 per feature, not per app.
 
+### Hermes live in Ghostty: same hotkey, every app
+
+![](docs/screenshots/08-hermes-live.png)
+
+The setup this whole repo serves: Hermes running in a custom Ghostty
+(AT&T PC6300 pixel font, binary-constellation shader under a CRT layer),
+Ara at her station, and the typed line saying it plain — local voice in,
+whether you're replying to an email or talking to your agent. No
+relearning which button to push.
+
 ## The point in one paragraph
 
 No Python dependencies and no changes to Hermes itself — though be
@@ -249,7 +259,7 @@ hermes-openwhispr/
 ├── README.md
 ├── LICENSE
 ├── skills/openwhispr/SKILL.md
-├── docs/screenshots/01-07*.png
+├── docs/screenshots/01-08*.png
 └── tests/test_plugin.py
 ```
 
