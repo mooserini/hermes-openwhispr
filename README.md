@@ -39,6 +39,9 @@ Granular, both directions, your call throughout:
 
 - Shell-outs to `openwhispr *` through the `terminal` tool only.
 - Local network: 127.0.0.1:8200 (desktop bridge) when using `--local`.
+  The app writes a one-time bearer token to its own bridge file (mode
+  `0600`) at startup and the CLI reads it automatically — loopback is
+  authenticated, not open.
 - Remote network: api.openwhispr.com only when you opt into `--remote`.
 - Reads the CLI's own config/token file read-only
   (`~/.openwhispr/cli-config.json`); never writes, refreshes, or rotates it.

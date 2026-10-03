@@ -2,7 +2,7 @@
 name: openwhispr
 description: Use when finding what [user] dictated or shared via voice.
 version: 0.1.0
-author: [user], Hermes Agent
+author: [user] ([user]), Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
 metadata:
@@ -13,7 +13,7 @@ metadata:
 
 # OpenWhispr Skill
 
-Local-first voice history and shared notes for [user], with a paid cloud fallback. OpenWhispr is the user's consistent voice input everywhere; its transcriptions are the rolling breadcrumb trail of what they said, and its notes are the handoff surface between agents.
+Local-first voice history and shared notes for [user], with a paid cloud fallback. OpenWhispr is his consistent voice input everywhere; its transcriptions are the rolling breadcrumb trail of what he said, and its notes are the handoff surface between agents.
 
 Does not include assistant replies. Does not replace Hermes STT config. Defaults to the free local desktop bridge; the Pro/Business cloud API is opt-in only and never touched without explicit consent.
 
@@ -31,7 +31,7 @@ Does not include assistant replies. Does not replace Hermes STT config. Defaults
 - Node.js 20 or later.
 - `@openwhispr/cli` installed globally (`terminal(command="npm install -g @openwhispr/cli")`).
 - OpenWhispr desktop app running locally for any `--local` work. No login or API key needed for local.
-- Remote/cloud is opt-in: Pro or Business plan, API key via `terminal(command="openwhispr auth login")` (stored in the CLI's own config, not Hermes `.env`), scopes `transcriptions:write`, `dictionary:read/write`, `snippets:read/write`. Never log in, set `api-base`, or send audio remote without explicit consent.
+- Remote/cloud is opt-in: paid plan (API key management is a paid feature), key via `terminal(command="openwhispr auth login")` (stored in the CLI's own config with 0600 permissions, not Hermes `.env`). No-desktop-app path: the agent bootstrap flow (`POST /auth/email-code` then `/auth/email-code/verify`, human pastes a 6-digit code) mints a 15-minute session token that can `POST /keys/create` a scoped permanent key. Gotcha: `transcriptions:delete` has no checkbox in the desktop app, so a delete-capable key must be created through the API. Never log in, set `api-base`, or send audio remote without explicit consent.
 
 ## How to Run
 
@@ -86,7 +86,7 @@ Exit codes: 0 success, 1 bad args, 2 backend unreachable (app not running), 3 au
 - No SRT/VTT from the CLI; use `--format json` and post-process segments for timestamps.
 - `audio delete` is local-only and dictation-only; meeting transcripts have no audio file; `--remote` errors by design.
 - Never write, update, or delete notes/transcriptions/dictionary without explicit consent; reads and searches are always safe.
-- File fallback: OpenWhispr can auto-save notes and transcripts as files on disk, organized by folder, with a rebuild action. When [user] enables it, prefer `read_file`/`search_files` against their configured save location for bulk reads; use the CLI when freshness or metadata (ids, timestamps) matters.
+- File fallback: OpenWhispr can auto-save notes and transcripts as files on disk, organized by folder, with a rebuild action. When [user] enables it, prefer `read_file`/`search_files` against his configured save location for bulk reads; use the CLI when freshness or metadata (ids, timestamps) matters.
 
 ## Verification
 
