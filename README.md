@@ -36,6 +36,14 @@ all optional) auto-fill meeting titles and attendees. CLI and MCP split
 cleanly: local CLI free with no key, cloud CLI and MCP for Claude,
 ChatGPT, and Cursor on the paid plan.
 
+Under the hood it's bundled C++ runtimes, not a Python stack:
+whisper.cpp for the Whisper family, sherpa-onnx for Orukeet, Parakeet,
+Nemotron, and Cohere — no interpreter or runtime to install. Metal
+acceleration is built in on Apple Silicon with automatic CPU fallback,
+CUDA/Vulkan are one-click on other platforms, and the default local
+model is ~672MB with the most accurate offline option at ~2.7GB. Small
+binaries, honest sizes, GPU when it's there, CPU when it isn't.
+
 - **One trail across every surface.** Discord, every gateway, every
   interface — CLI, TUI, dashboard, desktop. Because OpenWhispr sits at
   voice input rather than inside any one app, it's a rolling record of
