@@ -1,8 +1,21 @@
 # hermes-openwhispr
 
-A small, local-first bridge between Hermes and OpenWhispr. Offered as a
+A small, local-first plugin between Hermes and OpenWhispr. Offered as a
 standalone plugin — not a claim on Hermes core, just an option for people
 who want it.
+
+Two doors, pick yours. **You dictate and want your words found:** install
+OpenWhispr, leave it running, and an agent can see your dictations —
+the rest of this file is the maintainer's case, and the pictures tell it
+faster than the prose. **You maintain Hermes and you're reviewing a
+proposal:** keep reading; every claim is followed by its evidence, and the
+trust material (privacy, disclosures, attribution) sits after the story.
+
+Words used once, for everyone: STT means speech-to-text (voice into
+words). MCP means Model Context Protocol (how assistants read app data).
+A gateway is any Hermes front door — Discord, Telegram, the terminal, and
+friends. CLI, TUI, dashboard, and desktop are the four local faces:
+command line, terminal UI, web panel, native app.
 
 ## What it does
 
@@ -19,22 +32,25 @@ touch the cloud unless you explicitly opt in.
 
 ## Why this sells itself (not our product, just the facts)
 
-Per-feature model choice across five tiers — Dictation Cleanup, Voice
+Per-feature model choice across tiers — Dictation Cleanup, Voice
 Assistant, Translation, Note Formatting, Chat each pick independently
 from: OpenWhispr Cloud (no setup), Cloud Providers (bring your own key),
 Local (on-device, fully private), Self-Hosted (your server on your
-network), Enterprise (your org's AWS/Azure/GCP). Local runs oversized
-models fine, the floating bar moves anywhere, transcript visible or
-hidden — non-intrusive and it looks right.
+network), Enterprise (your org's cloud account — AWS and Azure real,
+GCP marked planned in their docs). A live transcription preview can show
+in a floating window before cleanup (see the dictation shot below).
 
-Auto-learn from corrections watches fixes in the target app and grows
-the dictionary. Clipboard auto-paste plus keep-in-clipboard keeps flow.
+Auto-learn from corrections is off by default; once you enable it under
+Settings → Preferences, the words you fix in the target app land in your
+dictionary by themselves. "Automatic pasting" drops text into the active
+app, "Keep transcription in clipboard" holds it for manual pasting.
 Optional file export saves notes and transcripts to disk organized by
-folder, with a rebuild action — a second on-disk breadcrumb trail agents
-can read directly. Calendar integrations (Google/Microsoft/Apple,
-all optional) auto-fill meeting titles and attendees. CLI and MCP split
-cleanly: local CLI free with no key, cloud CLI and MCP for Claude,
-ChatGPT, and Cursor on the paid plan.
+folder, with "Rebuild all files" — a second on-disk breadcrumb trail
+agents can read directly. Calendar integrations are all optional; only
+Google's row promises auto-filled titles and attendees, Microsoft and
+Apple say "read," and Apple reads Calendar.app. CLI and MCP split
+cleanly: local CLI free with no key, cloud CLI and assistant connectors
+(a paid tier, buttons as labeled in the app's Integrations screen).
 
 Under the hood it's bundled C++ runtimes, not a Python stack:
 whisper.cpp for the Whisper family, sherpa-onnx for Orukeet, Parakeet,
@@ -47,7 +63,7 @@ binaries, honest sizes, GPU when it's there, CPU when it isn't.
 - **One trail across every surface.** Discord, every gateway, every
   interface — CLI, TUI, dashboard, desktop. Because OpenWhispr sits at
   voice input rather than inside any one app, it's a rolling record of
-  everything [user] says across all of those trajectories, not just one
+  everything you say across all of those trajectories, not just one
   chat log. Wherever the words came out, the breadcrumb is there.
 - **Scale it to your machine and your appetite, not five fixed sizes.**
   Small computer with thin resources, or light needs? Go small. Want a
@@ -60,16 +76,17 @@ binaries, honest sizes, GPU when it's there, CPU when it isn't.
 
 Read top to bottom — each picture follows the claim it proves, with its
 context right beside it so nothing needs backtracing. Personal details
-redacted with blur before publishing. This repo uses `[user]` wherever a
-personal name, handle, email, or path would go — substitute your own when
-following along.
+redacted with blur before publishing.
 
-### CLI install, Local Free vs Cloud Pro, MCP upsell
+### Integrations screen: assistant upsell on top, CLI access below
 
 ![](docs/screenshots/01-cli-access.png)
 
-`npm install -g @openwhispr/cli`, then `openwhispr --local notes list`
-with no login — or Cloud Pro and MCP for Claude, ChatGPT, and Cursor.
+The eye hits the paid connector card first; the CLI card underneath is
+the free half: `npm install -g @openwhispr/cli`, then
+`openwhispr --local transcriptions list --limit 5` with no login.
+(`notes list` starts empty — notes are the handoff surface you save to,
+transcriptions are the history.)
 
 ### Per-feature model picker: five tiers, your call each time
 
@@ -79,48 +96,54 @@ Dictation Cleanup, Voice Assistant, Translation, Note Formatting, Chat —
 each picks independently from OpenWhispr Cloud, Cloud Providers (own
 key), Local on-device private, Self-Hosted, or Enterprise.
 
-### Auto-learn from corrections: the self-improving dictionary
+### Auto-learn from corrections (shown after enabling it)
 
 ![](docs/screenshots/03-auto-learn.png)
 
-Fix a word in the target app and it's in your dictionary. No maintenance.
+Fix a word in the target app and it joins your dictionary — but only
+after you flip this switch on. Nothing learns silently.
 
 ### Clipboard flow plus save-notes-as-files (save path redacted)
 
 ![](docs/screenshots/04-save-to-disk.png)
 
-Auto-paste, keep-in-clipboard, and on-disk Markdown organized by folder
-with a rebuild action — a second breadcrumb trail agents can read directly.
+"Automatic pasting," "Keep transcription in clipboard," and on-disk
+Markdown organized by folder with "Rebuild all files" — a second
+breadcrumb trail agents can read directly.
 
-### Optional calendars and Pro API keys (account email redacted)
+### Optional calendars and paywalled API access (account email redacted)
 
 ![](docs/screenshots/05-calendar-api.png)
 
-Google, Microsoft, Apple — all optional. Meeting titles and attendees
-auto-fill into notes.
+Only Google is connected here, which is the row that auto-fills meeting
+titles and attendees. API access itself sits behind the paid plan.
 
-### Dictation engine picker: 3 inputs, 4 tiers, 4 local vendors
+### A different picker: dictation engines, four tiers, four local vendors
 
 ![](docs/screenshots/06-speech-to-text.png)
 
-Dictation, Note Recording, Audio Upload. Oruk, OpenAI, NVIDIA, Cohere —
-Cohere Transcribe 2B active on-device here — plus live-transcription preview.
+Not the same dialog as above: Dictation, Note Recording, Audio Upload
+across Cloud, own-key, Local, Self-Hosted — no Enterprise tier here.
+Local vendors Oruk, OpenAI, NVIDIA, Cohere, with Cohere Transcribe 2B
+active on-device — plus the live-transcription floating preview.
 
-### Dictation Cleanup picker: 6 vendors, per-model downloads
+### Dictation Cleanup download list: six vendors, honest sizes
 
 ![](docs/screenshots/07-dictation-cleanup-models.png)
 
-Qwen, Mistral, Meta Llama, OpenAI, Gemma, Liquid AI, with honest sizes
-(Gemma 4 31B at 19.6GB). Pin a different model per task or run
+Qwen, Mistral, Meta Llama, OpenAI, Gemma, Liquid AI. These are downloads,
+not installs — Gemma 4 31B shows a Download button at 19.6GB, and the
+list continues below the crop. Pin a different model per task or run
 everything on one — local, cloud, self-hosted, or enterprise, decided
 per feature, not per app.
 
 ## The point in one paragraph
 
-No weird integrations, no regressions, no new dependencies: your
-personal context shows up in every space you interact in, with every
-agent you talk to — and underneath it all, a first-class, go-to
-speech-to-text option that happens to remember everything you said.
+No Python dependencies and no changes to Hermes itself — though be
+honest about the price of admission: Node 20, one global CLI package,
+and the desktop app running (plus `ffmpeg` on PATH for large cloud
+uploads). What you get is your dictations — not assistant replies —
+showing up in every space you interact in, with every agent you talk to.
 
 ## A win for both sides — and everyone in between
 
@@ -141,8 +164,9 @@ speech-to-text option that happens to remember everything you said.
 Granular, both directions, your call throughout:
 
 - **Local:** free, no login, audio never leaves your machine. Requires the
-  OpenWhispr desktop app running (bridge on 127.0.0.1:8200). This is the
-  default and works without any key.
+  OpenWhispr desktop app running (desktop bridge on loopback; the live
+  port is recorded in the CLI's bridge file). This is the default and
+  works without any key.
 - **Cloud:** opt-in only. Needs a Pro or Business plan plus
   `openwhispr auth login` (the key lives in the CLI's own config, not in
   Hermes `.env`). Cloud transcription is beta with no SLA; files over 4 MB
@@ -157,14 +181,20 @@ Granular, both directions, your call throughout:
 ## Disclosures (catalog review)
 
 - Shell-outs to `openwhispr *` through the `terminal` tool only.
-- Local network: 127.0.0.1:8200 (desktop bridge) when using `--local`.
-  The app writes a one-time bearer token to its own bridge file (mode
-  `0600`) at startup and the CLI reads it automatically — loopback is
-  authenticated, not open.
+- Local network: loopback desktop bridge when using `--local`. The app
+  writes a one-time bearer token to its own bridge file (mode `0600`) at
+  startup and the CLI reads it automatically — loopback is authenticated,
+  not open.
 - Remote network: api.openwhispr.com only when you opt into `--remote`.
-- Reads the CLI's own config/token file read-only
-  (`~/.openwhispr/cli-config.json`); never writes, refreshes, or rotates it.
-- No background daemons, no self-updater, no telemetry.
+- The agent never opens credential files itself: the vendor CLI reads its
+  own bridge token and `~/.openwhispr/cli-config.json` (both `0600`).
+  Key setup includes the agent bootstrap flow (`/auth/email-code`, a
+  6-digit code the user pastes, `POST /keys/create` for a scoped key) —
+  always with consent, key stays in the CLI config, never in Hermes
+  `.env`. Note `transcriptions:delete` has no desktop-app checkbox, so a
+  delete-capable key can only be born through the API.
+- No daemons of ours, no self-updater, no telemetry. (The desktop app
+  itself must be running for local mode — that's theirs, not ours.)
 - No core overrides: no patching of Hermes functions, modules, or stores.
   If a needed hook doesn't exist, that's an upstream feature request.
 
@@ -188,9 +218,10 @@ Granular, both directions, your call throughout:
 ```
 hermes-openwhispr/
 ├── plugin.yaml
-├── __init__.py                      # inert register(), skill-carrier
+├── __init__.py                      # register_skill(), skill-carrier
 ├── README.md
-├── skills/productivity/openwhispr/SKILL.md
+├── LICENSE
+├── skills/openwhispr/SKILL.md
 ├── docs/screenshots/01-07*.png
 └── tests/test_plugin.py
 ```
@@ -199,16 +230,20 @@ hermes-openwhispr/
 
 ```bash
 npm install -g @openwhispr/cli
-openwhispr doctor                      # local reachable, exit 0
+openwhispr doctor                      # exit 0, local bridge reachable
 openwhispr --local transcriptions list --limit 5
-hermes --toolsets skills -q "Use the openwhispr skill to list my recent dictations"
-scripts/run_tests.sh tests/skills/test_openwhispr_skill.py -q   # in hermes-agent, once proposed
+hermes plugins install <repo-url> && hermes plugins enable hermes-openwhispr
+# then in a session: skill_view("hermes-openwhispr:openwhispr")
+# (plugin skills load by qualified name; they are not auto-indexed)
 python -m pytest tests/ -q             # here
 ```
 
+The Hermes-side skill test (`tests/skills/test_openwhispr_skill.py`)
+belongs to a hermes-agent PR, once proposed — not to this repo.
+
 ## Proposal path
 
-Pitched as a standalone plugin while maintainers consider whether a
-first-class `stt.provider: openwhispr-local` option (with fallback to
-faster-whisper) belongs in the ship bundle. No presumption either way —
-this stands alone regardless.
+Pitched as a standalone plugin. Hermes's own guide keeps third-party
+product integrations in standalone repos rather than the core tree, so
+any ship-bundle conversation would be a separate, optional ask — no
+presumption either way. This stands alone regardless.
