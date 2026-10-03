@@ -17,38 +17,6 @@ who want it.
 What it doesn't do: replace Hermes STT, include assistant replies, or
 touch the cloud unless you explicitly opt in.
 
-## Privacy is yours to tune
-
-Granular, both directions, your call throughout:
-
-- **Local:** free, no login, audio never leaves your machine. Requires the
-  OpenWhispr desktop app running (bridge on 127.0.0.1:8200). This is the
-  default and works without any key.
-- **Cloud:** opt-in only. Needs a Pro or Business plan plus
-  `openwhispr auth login` (the key lives in the CLI's own config, not in
-  Hermes `.env`). Cloud transcription is beta with no SLA; files over 4 MB
-  are chunked client-side and need `ffmpeg` on PATH.
-- **Reads vs writes:** reads and searches are always safe. Creates, updates,
-  and deletes (notes, transcriptions, dictionary, audio) only happen with
-  your explicit consent, every time.
-- **Dictionary:** a hint to the model, not an override. Auto-learn from
-  corrections (Settings → Preferences) is off unless you turn it on.
-  Export it before moving machines.
-
-## Disclosures (catalog review)
-
-- Shell-outs to `openwhispr *` through the `terminal` tool only.
-- Local network: 127.0.0.1:8200 (desktop bridge) when using `--local`.
-  The app writes a one-time bearer token to its own bridge file (mode
-  `0600`) at startup and the CLI reads it automatically — loopback is
-  authenticated, not open.
-- Remote network: api.openwhispr.com only when you opt into `--remote`.
-- Reads the CLI's own config/token file read-only
-  (`~/.openwhispr/cli-config.json`); never writes, refreshes, or rotates it.
-- No background daemons, no self-updater, no telemetry.
-- No core overrides: no patching of Hermes functions, modules, or stores.
-  If a needed hook doesn't exist, that's an upstream feature request.
-
 ## Why this sells itself (not our product, just the facts)
 
 Per-feature model choice across five tiers — Dictation Cleanup, Voice
@@ -82,9 +50,11 @@ ChatGPT, and Cursor on the paid plan.
 
 ## Screenshots
 
-Personal details redacted with blur before publishing. This repo uses
-`[user]` wherever a personal name, handle, email, or path would go —
-substitute your own when following along.
+Read top to bottom — each picture follows the claim it proves, with its
+context right beside it so nothing needs backtracing. Personal details
+redacted with blur before publishing. This repo uses `[user]` wherever a
+personal name, handle, email, or path would go — substitute your own when
+following along.
 
 ### CLI install, Local Free vs Cloud Pro, MCP upsell
 
@@ -144,13 +114,76 @@ personal context shows up in every space you interact in, with every
 agent you talk to — and underneath it all, a first-class, go-to
 speech-to-text option that happens to remember everything you said.
 
+## A win for both sides — and everyone in between
+
+- **OpenWhispr** meets a crowd of local-first users who would never
+  otherwise try it. Free local gets them in; the paid cloud, MCP
+  connectors, and API are one step away when they want more — plus an
+  agent bootstrap flow that mints scoped keys with a single email code.
+- **Hermes and Nous Research** get the option of a local default that
+  remembers: every user carrying a rolling record of what they said,
+  reachable from any surface, on top of transcription they already trust.
+- **Users** stop choosing between a bill and a memory. Start free and
+  private; pay only if the cloud earns it; never lose what you said.
+  Tie in email, keep notes, transcribe audio — small pieces, and
+  together nearly a powerhouse.
+
+## Privacy is yours to tune
+
+Granular, both directions, your call throughout:
+
+- **Local:** free, no login, audio never leaves your machine. Requires the
+  OpenWhispr desktop app running (bridge on 127.0.0.1:8200). This is the
+  default and works without any key.
+- **Cloud:** opt-in only. Needs a Pro or Business plan plus
+  `openwhispr auth login` (the key lives in the CLI's own config, not in
+  Hermes `.env`). Cloud transcription is beta with no SLA; files over 4 MB
+  are chunked client-side and need `ffmpeg` on PATH.
+- **Reads vs writes:** reads and searches are always safe. Creates, updates,
+  and deletes (notes, transcriptions, dictionary, audio) only happen with
+  your explicit consent, every time.
+- **Dictionary:** a hint to the model, not an override. Auto-learn from
+  corrections (Settings → Preferences) is off unless you turn it on.
+  Export it before moving machines.
+
+## Disclosures (catalog review)
+
+- Shell-outs to `openwhispr *` through the `terminal` tool only.
+- Local network: 127.0.0.1:8200 (desktop bridge) when using `--local`.
+  The app writes a one-time bearer token to its own bridge file (mode
+  `0600`) at startup and the CLI reads it automatically — loopback is
+  authenticated, not open.
+- Remote network: api.openwhispr.com only when you opt into `--remote`.
+- Reads the CLI's own config/token file read-only
+  (`~/.openwhispr/cli-config.json`); never writes, refreshes, or rotates it.
+- No background daemons, no self-updater, no telemetry.
+- No core overrides: no patching of Hermes functions, modules, or stores.
+  If a needed hook doesn't exist, that's an upstream feature request.
+
+## Attribution
+
+- **OpenWhispr** makes the dictation app, the CLI (`@openwhispr/cli`),
+  the cloud API, and the docs at docs.openwhispr.com this plugin leans
+  on. All screenshots are of their application; all product names and
+  marks are theirs. This plugin is an independent community pitch, and
+  OpenWhispr should know it's being recommended to Nous Research as an
+  option — with appreciation, and without claiming their endorsement.
+- **Hermes Agent by Nous Research** is the platform this plugin extends,
+  through public plugin surfaces only. This is a proposal for their
+  consideration, not a directive — adoption as a first-class option is
+  theirs to decide.
+- This plugin itself is community work, published under MIT, with no
+  affiliation to either party.
+
 ## Layout
 
 ```
 hermes-openwhispr/
 ├── plugin.yaml
 ├── __init__.py                      # inert register(), skill-carrier
+├── README.md
 ├── skills/productivity/openwhispr/SKILL.md
+├── docs/screenshots/01-07*.png
 └── tests/test_plugin.py
 ```
 
