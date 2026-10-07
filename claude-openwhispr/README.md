@@ -62,7 +62,7 @@ screenshots below are of their application; read top to bottom.
 
 ### Integrations: assistant upsell on top, free CLI below
 
-![OpenWhispr Integrations screen with the CLI access card](docs/screenshots/01-cli-access.png)
+![OpenWhispr Integrations screen with the CLI access card](docs/screenshots/integrations-screen.png)
 
 The paid connector card catches the eye first; the CLI card underneath is the
 free half. Dictations land as notes automatically, so for anything older than
@@ -71,33 +71,33 @@ today: `openwhispr --local notes search "<phrase>" --limit 20`, then
 
 ### Per-feature model picker
 
-![Per-feature language model picker with five tiers](docs/screenshots/02-language-models.png)
+![Per-feature language model picker with five tiers](docs/screenshots/model-picker.png)
 
 ### Auto-learn from corrections (shown after enabling it)
 
-![Auto-learn from corrections setting](docs/screenshots/03-auto-learn.png)
+![Auto-learn from corrections setting](docs/screenshots/auto-learn-setting.png)
 
 ### Clipboard flow and save-notes-as-files (save path redacted)
 
-![Clipboard options and on-disk note export](docs/screenshots/04-save-to-disk.png)
+![Clipboard options and on-disk note export](docs/screenshots/notes-as-files.png)
 
 ### Optional calendars and paywalled API access (account email redacted)
 
-![Calendar integrations and API access](docs/screenshots/05-calendar-api.png)
+![Calendar integrations and API access](docs/screenshots/calendars-and-api.png)
 
 ### Dictation engines: four tiers, four local vendors
 
-![Speech-to-text engine picker](docs/screenshots/06-speech-to-text.png)
+![Speech-to-text engine picker](docs/screenshots/dictation-engines.png)
 
 ### Dictation Cleanup downloads: six vendors, honest sizes
 
-![Dictation Cleanup local model download list](docs/screenshots/07-dictation-cleanup-models.png)
+![Dictation Cleanup local model download list](docs/screenshots/cleanup-model-downloads.png)
 
 ### Same question, two brains: local vs cloud
 
-![Voice assistant answering with a local model](docs/screenshots/11-voice-local-test.png)
+![Voice assistant answering with a local model](docs/screenshots/voice-assistant-local.png)
 
-![Voice assistant answering through a cloud provider](docs/screenshots/12-voice-cloud-test.png)
+![Voice assistant answering through a cloud provider](docs/screenshots/voice-assistant-cloud.png)
 
 ## Privacy is yours to tune
 
@@ -145,6 +145,7 @@ claude-openwhispr/
 │   ├── plugin.json
 │   └── marketplace.json
 ├── skills/openwhispr/SKILL.md
+├── icon.png
 ├── docs/screenshots/
 ├── tests/test_plugin.py
 ├── README.md
