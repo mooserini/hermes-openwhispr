@@ -34,7 +34,7 @@ Does not include assistant replies. Does not replace any speech-to-text setup th
 
 Run every invocation through the Bash tool. Always prefer `--local` to force the free desktop bridge.
 
-- Check health via `openwhispr doctor` — exit 0 means at least one backend is up; confirm the local bridge shows reachable before relying on it. If local is unavailable (exit 2), tell the user to launch the desktop app and retry — never fall back to remote silently.
+- Check health via `openwhispr --local notes list --limit 1` — exit 0 means the local bridge answered, and it cannot touch the cloud. Bare `openwhispr doctor` diagnoses both backends and may contact the cloud when a key is stored, so run it only if the user asked for cloud diagnostics this turn. If local is unavailable (exit 2), tell the user to launch the desktop app and retry — never fall back to remote silently.
 - Backend select via `openwhispr config get`; leave `backend: auto` so it prefers local when the app runs. The bridge listens on loopback; the live port is recorded in the CLI's bridge file — never assume a fixed port.
 - Find what the user said via `openwhispr --local notes search "<phrase>" --limit 20`, then `openwhispr --local notes get <id> --transcript` — dictations are saved as notes automatically, and `notes search` is the search. Raw recent trail via `openwhispr --local transcriptions list --limit 10`.
 - Read notes via `openwhispr --local notes list --limit 20`, `openwhispr --local notes get <id> --format json|markdown`, `openwhispr --local notes search <query> --limit 10`.
@@ -46,7 +46,8 @@ Run every invocation through the Bash tool. Always prefer `--local` to force the
 All invocations run through `...`:
 
 ```
-openwhispr doctor
+openwhispr --local notes list --limit 1   # local-only health check
+openwhispr doctor                         # both backends; may contact cloud — opt-in turns only
 openwhispr config get
 openwhispr --local notes list [--folder <id>] [--limit N] [--format json|table]
 openwhispr --local notes get <id> [--transcript] [--format json|markdown]
@@ -69,7 +70,7 @@ Exit codes: 0 success (at least one backend reachable for `doctor`), 1 bad args,
 
 ## Procedure
 
-1. Verify local is up via `openwhispr doctor`. Done when the output reports the local bridge reachable; if exit 2, tell the user to launch the desktop app and retry — do not fall back to remote silently.
+1. Verify local is up via `openwhispr --local notes list --limit 1`. Done when it exits 0; if exit 2, tell the user to launch the desktop app and retry — do not fall back to remote silently.
 2. Find the breadcrumb: `notes search` first (limit 20), scan `text`/`created_at` fields. Done when the matching utterance or a clear miss is established; quote id + timestamp when citing. Fall back to the raw `transcriptions list` trail only for the very recent or unsaved.
 3. Promote only on purpose: transcriptions are raw history; `notes create` only when the user wants a durable shared note. Done when the note id returns and `notes get` round-trips the same content.
 4. Share between agents via notes: title + folder + full JSON body, never paraphrase ids. Done when the next agent can `notes get <id>` without asking the user for context.
@@ -90,7 +91,7 @@ Exit codes: 0 success (at least one backend reachable for `doctor`), 1 bad args,
 
 ## Verification
 
-- `openwhispr doctor` exits 0 and reports the local bridge reachable.
+- `openwhispr --local notes list --limit 1` exits 0 (local bridge reachable).
 - Cited utterance includes transcription id + UTC timestamp matching `transcriptions get`.
 - Any created note round-trips via `notes get <id> --format json` with identical title/content.
 - No remote calls were made unless the user asked in this turn.

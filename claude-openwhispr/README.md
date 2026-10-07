@@ -10,7 +10,7 @@ write OpenWhispr notes, and transcribe local audio, all through the
 brew install --cask openwhispr     # or openwhispr.com/download
 # open the app, press your dictation hotkey, say something
 npm install -g @openwhispr/cli
-openwhispr doctor                  # local bridge reachable
+openwhispr --local notes list --limit 1   # local bridge reachable
 ```
 
 Then add the plugin inside Claude Code:
@@ -155,7 +155,7 @@ claude-openwhispr/
 ## Smoke test
 
 ```bash
-openwhispr doctor                      # exit 0, local bridge reachable
+openwhispr --local notes list --limit 1   # exit 0, local bridge reachable
 openwhispr --local notes search "hello" --limit 5
 python -m pytest tests/ -q
 ```
