@@ -1,0 +1,8 @@
+{
+  "name": "openwhispr",
+  "version": "0.1.0",
+  "description": "Local-first OpenWhispr voice history and notes for Claude.",
+  "author": { "name": "Community contribution" },
+  "license": "MIT",
+  "keywords": ["openwhispr", "dictation", "voice", "notes", "transcription"]
+}
