@@ -2,7 +2,7 @@
 name: openwhispr
 description: Find what the user dictated in local voice history.
 version: 0.1.0
-author: Community contribution
+author: Thomas Kenny (github.com/mooserini)
 license: MIT
 platforms: [linux, macos, windows]
 ---

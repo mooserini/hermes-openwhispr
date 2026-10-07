@@ -1,7 +1,8 @@
 {
   "name": "openwhispr",
   "owner": {
-    "name": "Community contribution"
+    "name": "Thomas Kenny",
+    "url": "https://github.com/mooserini"
   },
   "plugins": [
     {

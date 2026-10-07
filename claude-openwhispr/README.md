@@ -134,7 +134,8 @@ today: `openwhispr --local notes search "<phrase>" --limit 20`, then
   screenshots are of their application; all product names and marks are
   theirs.
 - **Claude and Claude Code** are Anthropic's. This is independent community
-  work, published under MIT, affiliated with neither party and claiming no
+  work by [Thomas Kenny](https://github.com/mooserini), published under MIT,
+  affiliated with neither party and claiming no
   endorsement from either.
 
 ## Layout
